@@ -60,8 +60,33 @@ To find the bottleneck, I used two tools:
 
 Bottleneck:
   Looking inside advance() more closely (via the flame graph's breakdown of
-  operations), no single operation stands out as "the" problem -- it's a mix
-  of many small operations (float multiplication, subtraction, list
-  read/write) that each take a similar, small amount of time. So the
-  bottleneck is advance() as a whole, not one specific line or operation
-  inside it.
+  operations), list indexing (reading and writing v1[0], v1[1], v1[2],
+  v2[0], v2[1], v2[2]) turned out to be the biggest single group of
+  operations, at ~8.4% combined -- bigger than any single arithmetic
+  operation alone (the largest, float multiplication, was ~7.6%). So the
+  bottleneck is advance() as a whole, and list indexing specifically stood
+  out as the most concrete thing to try optimizing.
+
+--------------------------------------------------------------------------------
+OPTIMIZATIONS
+--------------------------------------------------------------------------------
+
+Optimization tried: unboxing the velocity list indexing in advance().
+
+Looking at the flame graph, list indexing (reading and writing v1[0], v1[1],
+v1[2], v2[0], v2[1], v2[2]) was the biggest single group of operations at
+~8.4% combined, bigger than any single arithmetic operation alone. So the
+idea was to unpack v1 and v2 into local variables once at the start of the
+pair loop, do the math, then write back to the list only once per component
+at the end -- cutting down how many times we touch the list directly.
+
+--------------------------------------------------------------------------------
+PERFORMANCE COMPARISON
+--------------------------------------------------------------------------------
+
+Result (measured with pyperformance --rigorous, then compared with
+pyperf compare_to):
+
+  baseline:   229 ms
+  optimized:  210 ms
+  -> 1.09x faster (~9% improvement)
