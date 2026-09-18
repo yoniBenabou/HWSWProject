@@ -1,0 +1,67 @@
+================================================================================
+REPORT: Nbody Benchmark
+================================================================================
+
+--------------------------------------------------------------------------------
+OVERVIEW
+--------------------------------------------------------------------------------
+
+Nbody, a pyperformance benchmark, provides a model of the
+interaction of 5 bodies in space (the Sun, Jupiter, Saturn, Uranus,
+and Neptune). Each body consists of 3 attributes - position, velocity
+and mass, presented as mutable lists of pure Python floats (without
+using any numpy library).
+
+The main operation of the program is represented by function
+advance(dt, n), which is executed for 20000 iterations. During every
+iteration, the function performs the following:
+
+1. Iterates through each of 10 pairs of bodies (there are 5 bodies in
+total).
+
+2. Calculates the distance vector between the two bodies (dx, dy, dz)
+and, from it, the gravitational force magnitude acting on each of
+them.
+
+3. Updates the velocities of the bodies based on the calculated
+forces.
+
+4. Updates the positions of the 5 bodies based on the provided
+velocities.
+
+There are also two other functions - report_energy() and
+offset_momentum(), but since they run just once or twice, they are
+not crucial from the performance point of view.
+
+--------------------------------------------------------------------------------
+INITIAL ANALYSIS
+--------------------------------------------------------------------------------
+
+Baseline (measured with pyperformance, --rigorous for a more stable number):
+  229 ms, +/- 2 ms
+
+To find the bottleneck, I used two tools:
+
+1) Flame graph (perf, via pyperformance's --hook perf_record)
+
+   The flame graph shows most of the time is spent inside Python's own
+   interpreter, doing basic operations like float math (multiplication,
+   subtraction) and list read/write. It doesn't show Python function names
+   directly (advance() never appears), only the underlying C-level
+   operations -- Python functions don't get their own frame in perf, they
+   all run through the same interpreter loop.
+
+2) cProfile
+
+   cProfile does show function names, and it's clear from that: almost all
+   the time (99.9%) is spent inside a single function, advance(). The other
+   two functions, report_energy() and offset_momentum(), are negligible --
+   they only run once or twice.
+
+Bottleneck:
+  Looking inside advance() more closely (via the flame graph's breakdown of
+  operations), no single operation stands out as "the" problem -- it's a mix
+  of many small operations (float multiplication, subtraction, list
+  read/write) that each take a similar, small amount of time. So the
+  bottleneck is advance() as a whole, not one specific line or operation
+  inside it.
