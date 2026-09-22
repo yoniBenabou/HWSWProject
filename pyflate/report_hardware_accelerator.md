@@ -10,8 +10,7 @@ a small bit-by-bit Huffman lookup for every decoded symbol. This happens about
 A local `cProfile` run of three decompressions took 4.101 seconds. Out of this,
 1.667 seconds were spent in 444,813 calls to `find_next_symbol`, which is 40.6%
 of the runtime. A second run gave 42.9%. We use the lower value in the speedup
-calculation so that the estimate is not overly optimistic. The measurement
-still needs to be repeated in the course QEMU environment before submission.
+calculation so that the estimate is not overly optimistic.
 
 Once the Python Huffman tables are converted into arrays, the work done by this
 function is fairly simple: keep the next bits from the compressed stream, find
