@@ -16,6 +16,7 @@ fi
 
 # --- 2. Baseline benchmark execution ---
 cd source
+rm -f ../results/baseline.json
 python3 pyflate_baseline.py --rigorous -o ../results/baseline.json
 
 # --- 3. Flame graph generation ---
@@ -37,5 +38,6 @@ cd -
 cp /dev/shm/pyflate_flamegraph.svg ../profiling/flamegraph.svg
 
 # --- 4. Post-optimization benchmark execution and comparison ---
+rm -f ../results/optimized.json
 python3 pyflate_optimized.py --rigorous -o ../results/optimized.json
 python3 -m pyperf compare_to ../results/baseline.json ../results/optimized.json --table
