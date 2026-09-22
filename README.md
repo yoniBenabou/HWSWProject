@@ -10,29 +10,28 @@ BZip2 decompressor written entirely in Python).
 
 ## What's in here
 
-nbody/
-├── source/
-│ ├── nbody_baseline.py # original benchmark
-│ └── nbody_optimized.py # our optimized version
-├── results/ # pyperf json outputs, baseline vs optimized
-├── profiling/ # flame graph svg + cprofile output
-├── report_nbody.txt # overview, analysis, optimization, results
-└── script_nbody.sh # runs everything: setup, profiling, comparison
+- nbody/
+  - source/
+    - nbody_baseline.py       (original benchmark)
+    - nbody_optimized.py      (our optimized version)
+  - results/                  (pyperf json outputs, baseline vs optimized)
+  - profiling/                (flame graph svg + cprofile output)
+  - report_nbody.txt          (overview, analysis, optimization, results)
+  - script_nbody.sh           (runs everything: setup, profiling, comparison)
 
-pyflate/
-├── source/
-│ ├── pyflate_baseline.py
-│ ├── pyflate_optimized.py
-│ └── data/interpreter.tar.bz2 # the file the benchmark decompresses
-├── results/
-├── profiling/
-├── report_pyflate.txt
-├── script_pyflate.sh
-├── hardware/ # the hardware accelerator (verilog)
-└── report_hardware_accelerator.pdf
+- pyflate/
+  - source/
+    - pyflate_baseline.py
+    - pyflate_optimized.py
+    - data/interpreter.tar.bz2   (the file the benchmark decompresses)
+  - results/
+  - profiling/
+  - report_pyflate.txt
+  - script_pyflate.sh
+  - hardware/                 (the hardware accelerator, verilog)
+  - report_hardware_accelerator.pdf
 
-prompt.txt # AI prompts used during the project
-
+- prompt.txt                  (AI prompts used during the project)
 
 ## Results
 
