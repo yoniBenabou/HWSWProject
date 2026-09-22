@@ -57,7 +57,7 @@ cd pyflate
 bash script_pyflate.sh
 ```
 
-We ran everything on Ubuntu 24.04 / Python 3.10 inside a QEMU VM. One thing
+We ran everything on the course's Ubuntu VM image (jammy-server-cloudimg) / Python 3.10, inside QEMU. One thing
 worth knowing: the default perf event (cycles) just doesn't work inside this
 VM, KVM doesn't expose the hardware counters to the guest. So, the scripts use
 task-clock instead.
