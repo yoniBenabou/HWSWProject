@@ -1231,3 +1231,89 @@ area אין מספר פיזי.
 סבבה.
 
 אני חושב שסיימתי את החלק הזה.
+
+---
+
+My part of the project (profiling, optimization) was done with Claude Code.
+
+---
+
+for nbody, based on the profiling, let's try unboxing the velocity list
+indexing in advance(), save it as a new file nbody_optimized.py, keep
+nbody_baseline.py as it is
+
+---
+
+before that show me the exact text of advance() in nbody_baseline.py so
+we patch the right thing
+
+---
+
+ok so instead of reading and writing v1[0] v1[1] v1[2] separately every
+time, unpack v1 and v2 into local variables once at the start of the pair
+loop, do the math with those, then write back to the list only once per
+component at the end
+
+---
+
+it worked, verify the patch is actually there in nbody_optimized.py
+before testing
+
+---
+
+run nbody_optimized.py with --rigorous, save the result as
+results/optimized.json, and compare it to results/baseline.json
+
+---
+
+commit and push
+
+---
+
+now pyflate, same idea but for _mask() in RBitfield, save it as
+pyflate_optimized.py, keep pyflate_baseline.py as it is
+
+---
+
+wait which class is actually used, RBitfield or Bitfield, check before
+you patch anything
+
+---
+
+show me snoopbits and readbits exact text in pyflate_baseline.py first
+
+---
+
+_mask(n) just returns (1 << n) - 1, so replace every call to
+self._mask(n) inside snoopbits and readbits with that expression
+directly instead of calling the method, don't touch the _mask method
+itself since it might still be used elsewhere
+
+---
+
+verify it in pyflate_optimized.py, then test with --rigorous, save as
+results/optimized.json, and compare to results/baseline.json
+
+---
+
+commit and push
+
+---
+
+the assignment wants script_<name>.sh files for each benchmark, let's
+put together everything we ran into one script per benchmark, name them
+script_nbody.sh and script_pyflate.sh
+
+---
+
+it needs to have: environment setup, running the benchmark, generating
+the flame graph, and running the optimized version + comparison, all in
+one script, for both nbody and pyflate
+
+---
+
+show me the script before I run it
+
+---
+
+commit and push both scripts
