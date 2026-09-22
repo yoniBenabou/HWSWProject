@@ -1,0 +1,52 @@
+================================================================================
+REPORT: Pyflate Benchmark
+================================================================================
+
+--------------------------------------------------------------------------------
+OVERVIEW
+--------------------------------------------------------------------------------
+
+Pyflate decompresses a file (interpreter.tar.bz2, 67 KB) using BZip2, all
+in plain Python
+
+1. Reading the file bit by bit (readbits/snoopbits)
+2. Decoding the compressed data using Huffman coding, block by block
+   (decode_huffman_block, find_next_symbol)
+3. Undoing the Burrows-Wheeler Transform
+   (bwt_reverse)
+4. A small final cleanup step
+
+--------------------------------------------------------------------------------
+INITIAL ANALYSIS
+--------------------------------------------------------------------------------
+
+Baseline (measured with pyperformance, --rigorous for a more stable number):
+  1.12 sec, +/- 0.01 sec
+
+To find the bottleneck, I used two tools:
+
+1) Flame graph (perf, via pyperformance's --hook perf_record)
+
+   The flame graph doesn't show Python function names directly, only
+   C-level operations -- Python functions don't get their own frame in
+   perf. On top of that, perf could only resolve about 40% of the samples
+   to any function at all, the rest shows up as "unknown". The part that is
+   resolved is split across a lot of small operations (list operations,
+   integer bit operations, comparisons, function call overhead), nothing
+   above ~4% individually.
+
+2) cProfile
+
+   cProfile does show function names. No single function dominates -- the
+   biggest one, decode_huffman_block, is only about 22% of the time. But
+   several functions related to Huffman decoding and bit reading
+   (decode_huffman_block, find_next_symbol, snoopbits, move_to_front,
+   readbits, _mask) add up to about 71% of the total time combined.
+
+Bottleneck:
+  There's no single function that's basically the whole runtime. The
+  Huffman decoding + bit reading part as a whole is where most of the time
+  goes. Looking closer, _mask() stood out: it's called 655,017 times, and
+  even though each call barely does anything ((1 << n) - 1), that many
+  calls adds up. That looked like the most concrete thing to try
+  optimizing.
