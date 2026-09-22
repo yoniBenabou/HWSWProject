@@ -73,3 +73,27 @@ pyperf compare_to):
   baseline:   1.12 sec
   optimized:  1.05 sec
   -> 1.07x faster (~7% improvement)
+
+--------------------------------------------------------------------------------
+HARDWARE ACCELERATION PROPOSAL
+--------------------------------------------------------------------------------
+
+For the hardware part, we chose to accelerate find_next_symbol(), which is the
+main Huffman lookup function. The proposed accelerator keeps up to six Huffman
+table banks and a 64-bit input buffer in hardware, checks the possible code
+lengths, and returns the decoded symbol together with the number of bits
+consumed. The rest of the decompression stays in software.
+
+The RTL implementation, testbench, hardware-software interface, performance
+estimate, and design trade-offs are described in detail in
+report_hardware_accelerator.md.
+
+--------------------------------------------------------------------------------
+CONCLUSION
+--------------------------------------------------------------------------------
+
+Inlining _mask() reduced the benchmark time from 1.12 seconds to 1.05 seconds,
+which is about a 7% improvement. This is a useful software optimization, but
+the baseline profiling showed that the wider Huffman and bitstream decoding
+path took most of the runtime. This is why we selected find_next_symbol() from
+that path for the hardware proposal.
