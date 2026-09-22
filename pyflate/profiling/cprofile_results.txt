@@ -1,0 +1,45 @@
+decode_huffman_block      tottime=0.4825 cumtime=2.1226 ncalls=1
+find_next_symbol          tottime=0.3243 cumtime=1.0482 ncalls=148271
+snoopbits                 tottime=0.2211 cumtime=0.4819 ncalls=341601
+move_to_front             tottime=0.2128 cumtime=0.2128 ncalls=92803
+readbits                  tottime=0.1966 cumtime=0.2590 ncalls=156708
+_mask                     tottime=0.1267 cumtime=0.1267 ncalls=655017
+bwt_reverse               tottime=0.1078 cumtime=0.2405 ncalls=1
+bwt_transform             tottime=0.0768 cumtime=0.1019 ncalls=1
+<method 'append' of 'list' objects> tottime=0.0745 cumtime=0.0745 ncalls=766811
+_more                     tottime=0.0726 cumtime=0.1579 ncalls=67562
+<built-in method builtins.len> tottime=0.0682 cumtime=0.0682 ncalls=674570
+_read                     tottime=0.0540 cumtime=0.0753 ncalls=67562
+needbits                  tottime=0.0386 cumtime=0.1965 ncalls=67526
+<method 'join' of 'bytes' objects> tottime=0.0263 cumtime=0.0263 ncalls=2
+<built-in method builtins.sorted> tottime=0.0231 cumtime=0.0231 ncalls=1
+<method 'read' of '_io.BufferedReader' objects> tottime=0.0120 cumtime=0.0120 ncalls=67562
+<built-in method builtins.ord> tottime=0.0110 cumtime=0.0110 ncalls=76108
+compute_selectors_list    tottime=0.0038 cumtime=0.0193 ncalls=1
+reverse_bits              tottime=0.0029 cumtime=0.0029 ncalls=882
+<method 'find' of 'bytes' objects> tottime=0.0019 cumtime=0.0019 ncalls=256
+__init__                  tottime=0.0012 cumtime=0.0012 ncalls=882
+<built-in method _hashlib.openssl_md5> tottime=0.0009 cumtime=0.0009 ncalls=1
+compute_tables            tottime=0.0008 cumtime=0.0109 ncalls=1
+bzip2_main                tottime=0.0008 cumtime=2.1424 ncalls=1
+__init__                  tottime=0.0008 cumtime=0.0026 ncalls=6
+bench_pyflake             tottime=0.0006 cumtime=2.1439 ncalls=1
+populate_huffman_symbols  tottime=0.0004 cumtime=0.0034 ncalls=6
+<method 'sort' of 'list' objects> tottime=0.0003 cumtime=0.0004 ncalls=6
+min_max_bits              tottime=0.0002 cumtime=0.0002 ncalls=6
+_sort_func                tottime=0.0002 cumtime=0.0002 ncalls=882
+compute_used              tottime=0.0001 cumtime=0.0002 ncalls=1
+__init__                  tottime=0.0001 cumtime=0.0026 ncalls=6
+<method 'pack' of '_struct.Struct' objects> tottime=0.0001 cumtime=0.0001 ncalls=401
+toskip                    tottime=0.0000 cumtime=0.0000 ncalls=1
+align                     tottime=0.0000 cumtime=0.0000 ncalls=1
+__init__                  tottime=0.0000 cumtime=0.0000 ncalls=2
+<method 'seek' of '_io.BufferedReader' objects> tottime=0.0000 cumtime=0.0000 ncalls=1
+<method 'hexdigest' of '_hashlib.HASH' objects> tottime=0.0000 cumtime=0.0000 ncalls=1
+<method 'disable' of '_lsprof.Profiler' objects> tottime=0.0000 cumtime=0.0000 ncalls=1
+<method 'close' of '_io.BufferedReader' objects> tottime=0.0000 cumtime=0.0000 ncalls=1
+<listcomp>                tottime=0.0000 cumtime=0.0001 ncalls=1
+<built-in method time.perf_counter> tottime=0.0000 cumtime=0.0000 ncalls=2
+<built-in method io.open> tottime=0.0000 cumtime=0.0000 ncalls=1
+<built-in method builtins.sum> tottime=0.0000 cumtime=0.0000 ncalls=1
+<built-in method builtins.isinstance> tottime=0.0000 cumtime=0.0000 ncalls=2

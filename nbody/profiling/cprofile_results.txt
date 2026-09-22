@@ -1,0 +1,6 @@
+<built-in method time.perf_counter> tottime=0.0000 cumtime=0.0000 ncalls=2
+<method 'disable' of '_lsprof.Profiler' objects> tottime=0.0000 cumtime=0.0000 ncalls=1
+advance                   tottime=0.3110 cumtime=0.3110 ncalls=1
+report_energy             tottime=0.0000 cumtime=0.0000 ncalls=2
+offset_momentum           tottime=0.0000 cumtime=0.0000 ncalls=1
+bench_nbody               tottime=0.0000 cumtime=0.3111 ncalls=1
