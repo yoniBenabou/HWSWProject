@@ -90,3 +90,13 @@ pyperf compare_to):
   baseline:   229 ms
   optimized:  210 ms
   -> 1.09x faster (~9% improvement)
+
+--------------------------------------------------------------------------------
+CONCLUSION
+--------------------------------------------------------------------------------
+
+Unpacking the velocity lists into local variables reduced the runtime from
+229 ms to 210 ms, which is about a 9% improvement. The result is consistent
+with the baseline profiling observation that repeated list access inside
+advance() has a noticeable cost. This profile also showed that
+advance() as a whole was the main bottleneck.
