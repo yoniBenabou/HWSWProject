@@ -50,3 +50,26 @@ Bottleneck:
   even though each call barely does anything ((1 << n) - 1), that many
   calls adds up. That looked like the most concrete thing to try
   optimizing.
+
+--------------------------------------------------------------------------------
+OPTIMIZATIONS
+--------------------------------------------------------------------------------
+
+Optimization tried: inlining _mask() in RBitfield.
+
+_mask() just does (1 << n) - 1, but it's called 655,017 times from
+snoopbits() and readbits(). Even though each call is trivial, calling a
+separate method that many times adds up (attribute lookup + function call
+overhead each time). So the fix was just to write (1 << n) - 1 directly
+where _mask(n) was being called, instead of calling the method.
+
+--------------------------------------------------------------------------------
+PERFORMANCE COMPARISON
+--------------------------------------------------------------------------------
+
+Result (measured with pyperformance --rigorous, then compared with
+pyperf compare_to):
+
+  baseline:   1.12 sec
+  optimized:  1.05 sec
+  -> 1.07x faster (~7% improvement)
