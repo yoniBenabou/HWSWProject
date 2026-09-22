@@ -5,7 +5,9 @@
 
 set -e
 
-# --- 1. Environment setup and dependency installation ---
+echo "=================================================="
+echo "STEP 1: Environment setup and dependency installation"
+echo "=================================================="
 apt install -y python3-dbg python3-pip
 pip3 install pyperformance
 
@@ -14,12 +16,16 @@ if [ ! -d /tmp/FlameGraph ]; then
     git clone --depth 1 https://github.com/brendangregg/FlameGraph.git /tmp/FlameGraph
 fi
 
-# --- 2. Baseline benchmark execution ---
+echo "=================================================="
+echo "STEP 2: Baseline benchmark execution"
+echo "=================================================="
 cd source
 rm -f ../results/baseline.json
 python3 pyflate_baseline.py --rigorous -o ../results/baseline.json
 
-# --- 3. Flame graph generation ---
+echo "=================================================="
+echo "STEP 3: Flame graph generation"
+echo "=================================================="
 # Default hardware 'cycles' event does not work inside this VM (KVM does
 # not expose PMU counters to the guest), so task-clock is used instead.
 export PYPERF_PERF_RECORD_DATA_DIR=/dev/shm
@@ -36,8 +42,11 @@ done
 /tmp/FlameGraph/flamegraph.pl pyflate_combined.folded > pyflate_flamegraph.svg
 cd -
 cp /dev/shm/pyflate_flamegraph.svg ../profiling/flamegraph.svg
+echo "Flame graph saved to profiling/flamegraph.svg"
 
-# --- 4. Post-optimization benchmark execution and comparison ---
+echo "=================================================="
+echo "STEP 4: Post-optimization benchmark execution and comparison"
+echo "=================================================="
 rm -f ../results/optimized.json
 python3 pyflate_optimized.py --rigorous -o ../results/optimized.json
 python3 -m pyperf compare_to ../results/baseline.json ../results/optimized.json --table
