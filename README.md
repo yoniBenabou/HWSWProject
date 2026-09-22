@@ -1,5 +1,8 @@
 # HW/SW Co-design Project — Nbody & Pyflate
 
+Yoni Benabou - 800000218 - yoni.benabou@campus.technion.ac.il
+Ron Velitsky - 325892453 - ron.velitsky@campus.technion.ac.il
+
 This is our project for course 00460882, benchmark optimization + hardware
 accelerator proposal.
 
@@ -40,7 +43,8 @@ BZip2 decompressor written entirely in Python).
 | Nbody | 229 ms | 210 ms | +9% |
 | Pyflate | 1.12 sec | 1.05 sec | +7% |
 
-Both are above the 7% target from the assignment.
+For hardware build and verification instructions, see
+pyflate/hardware/README.md.
 
 ## How to run it
 
